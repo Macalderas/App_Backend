@@ -14,10 +14,8 @@ const db = mysql.createConnection({
   database: 'sistema_asistencia'
 });
 
-// RUTA PARA REGISTRAR PROFESOR
 app.post('/profesores', (req, res) => {
   const { correo, password, nivel, grados } = req.body;
-
   const query = 'INSERT INTO profesores (correo, password, nivel, grados) VALUES (?, ?, ?, ?)';
   db.query(query, [correo, password, nivel, grados.join(',')], (err, result) => {
     if (err) return res.status(500).json({ error: 'Error al registrar' });
