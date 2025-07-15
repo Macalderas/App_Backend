@@ -14,6 +14,11 @@ const db = mysql.createConnection({
   database: 'bnw7wmfrslrlql3pisbc'
 });
 
+app.get('/', (req, res) => {
+  res.send('Backend en línea 🚀');
+});
+
+
 // Registrar profesor
 app.post('/profesores', (req, res) => {
   const { correo, password, nivel, grados } = req.body;
