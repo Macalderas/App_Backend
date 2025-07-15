@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+	npm: install
+	npm: run star
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
