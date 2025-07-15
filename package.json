@@ -2,10 +2,10 @@
   "name": "app_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-	npm: install
-	npm: run star
+    "install": "npm install",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,3 +26,4 @@
     "mysql2": "^3.14.2"
   }
 }
+
