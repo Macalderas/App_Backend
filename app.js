@@ -1,18 +1,20 @@
 import express from 'express';
 import cors from 'cors';
 import mysql from 'mysql2';
+import dotenv from 'dotenv';  
 
+dotenv.config();              
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Conexión a la base de datos
 const db = mysql.createConnection({
-  host: 'bnw7wmfrslrlql3pisbc-mysql.services.clever-cloud.com',
-  user: 'uzqvdg9ppavwazri',
-  password: 'xd5e7TcoHt8MEiEi1Yu0',
-  database: 'bnw7wmfrslrlql3pisbc'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
 });
+
 
 app.get('/', (req, res) => {
   res.send('Backend en línea 🚀');
@@ -43,7 +45,24 @@ app.post('/profesores/login', (req, res) => {
   });
 });
 
-// 🔽 Aquí va el código que me pasaste 🔽
+// Validar contraseña de profesor (para confirmar acciones como eliminar)
+app.post('/profesores/validar', (req, res) => {
+  const { correo, password } = req.body;
+
+  if (!correo || !password) {
+    return res.status(400).json({ error: 'Correo y contraseña requeridos' });
+  }
+
+  const query = 'SELECT * FROM profesores WHERE correo = ? AND password = ?';
+  db.query(query, [correo, password], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Error del servidor' });
+    if (results.length === 0) return res.status(401).json({ error: 'Credenciales inválidas' });
+
+    res.json({ mensaje: 'Validación exitosa' });
+  });
+});
+
+
 
 // Registrar alumno
 app.post('/alumnos', (req, res) => {
